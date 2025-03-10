@@ -10,13 +10,13 @@ class Lexer {
 
    public:
       Lexer(string s) : flux(s), head(0), buffer(nullptr) { }
-      ~Lexer() { }
+      ~Lexer();
 
-      Symbole * getSymbol();
+      Symbol * getSymbol();
       void MoveHeadForward();
 
    protected:
       string flux; // input string to analyse
       int head; // current position in the input string
-      Symbole * buffer; // last symbol read
+      Symbol * buffer; // last symbol read
 };

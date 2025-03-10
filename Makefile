@@ -35,6 +35,9 @@ run: $(EXECUTABLE)
 
 rebuild_run: clean all run
 
+valgrind: $(EXECUTABLE)
+	valgrind --leak-check=full -s ./$(EXECUTABLE) $(RESOURCES)
+
 lldb: $(EXECUTABLE)
 	lldb ./$(EXECUTABLE) $(RESOURCES)
 

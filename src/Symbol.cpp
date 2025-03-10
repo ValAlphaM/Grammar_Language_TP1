@@ -2,19 +2,19 @@
 #include <iostream>
 
 // print the symbol given
-void Symbole::print() {
-   cout<<labels[ident];
+void Symbol::print() {
+   cout<<labels[index];
 }
 
 // print the INT symbol
-void Entier::print() {
-   Symbole::print();
-   cout<<"("<<valeur<<")";
+void Integer::print() {
+   Symbol::print();
+   cout<<"("<<value<<")";
 }
 
 // print the EXPR symbol (same as INT)
 void Expr::print() {
-   Symbole::print();
-   cout<<"("<<valeur<<")";
+   Symbol::print();
+   cout<<"("<<value<<")";
 }
 

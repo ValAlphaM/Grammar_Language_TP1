@@ -23,18 +23,18 @@ public:
     int compute();
 
     // forward
-    void forward(Symbole* s, State* e);
+    void forward(Symbol* s, State* e);
 
     // reduction
-    void reduction(int n, Symbole* s, int ruleNumber);
+    void reduction(int n, Symbol* s, int ruleNumber);
 
     // forward for an unterminal expression (not moving the head of the lexer)
-    void forward_unterminal(Symbole* s, State* e);
+    void forward_unterminal(Symbol* s, State* e);
  
 private:
     // state stack 
     stack<State*> stateStack;
-    stack<Symbole*> symbolStack;
+    stack<Symbol*> symbolStack;
 
     // lexer
     Lexer &lexer;

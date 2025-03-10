@@ -2,7 +2,17 @@
 
 // NOT COMMENTED BECAUSE IT IS GIVEN IN THE SUBJECT
 
-Symbole *Lexer::getSymbol()
+Lexer::~Lexer()
+{
+   if (DEBUG)
+   {
+      cout << "Lexer.~Lexer()" << endl;
+   }
+   if (buffer)
+      delete buffer;
+}
+
+Symbol *Lexer::getSymbol()
 {
    if (DEBUG)
    {
@@ -12,26 +22,26 @@ Symbole *Lexer::getSymbol()
    {
 
       if (head == flux.length())
-         buffer = new Symbole(FIN);
+         buffer = new Symbol(FIN);
       else
       {
 
          switch (flux[head])
          {
          case '(':
-            buffer = new Symbole(OPENPAR);
+            buffer = new Symbol(OPENPAR);
             head++;
             break;
          case ')':
-            buffer = new Symbole(CLOSEPAR);
+            buffer = new Symbol(CLOSEPAR);
             head++;
             break;
          case '*':
-            buffer = new Symbole(MULT);
+            buffer = new Symbol(MULT);
             head++;
             break;
          case '+':
-            buffer = new Symbole(PLUS);
+            buffer = new Symbol(PLUS);
             head++;
             break;
          default:
@@ -45,11 +55,11 @@ Symbole *Lexer::getSymbol()
                   i++;
                }
                head = head + i;
-               buffer = new Entier(result); // give the total integer to the buffer
+               buffer = new Integer(result); // give the total integer to the buffer
             }
             else
             {
-               buffer = new Symbole(ERREUR); // if not a number or a ending character, it's an error
+               buffer = new Symbol(ERREUR); // if not a number or a ending character, it's an error
             }
          }
       }

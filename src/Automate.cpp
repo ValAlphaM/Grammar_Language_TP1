@@ -9,7 +9,7 @@ Automate::Automate(Lexer &lexer):
 {
     // initialize stacks
     stateStack = stack<State*>();
-    symbolStack = stack<Symbole*>();
+    symbolStack = stack<Symbol*>();
 
     // initialize the first state
     stateStack.push(new State0("state0"));
@@ -45,7 +45,7 @@ void Automate::start(){
         currentState = stateStack.top();
     }
     
-    // if we are here the chain is accpted and well formated
+    // if we are here the chain is accepted and well formated
     cout << "Chain accepted" << endl;
 }
 
@@ -60,7 +60,7 @@ int Automate::compute() {
 
 
 // forward
-void Automate::forward(Symbole *s, State *e){
+void Automate::forward(Symbol* s, State* e){
     if(DEBUG){cout << "Automate.forward()" << endl;}
     // add the state and the symbol to the stack
     stateStack.push(e);
@@ -71,7 +71,7 @@ void Automate::forward(Symbole *s, State *e){
 }
 
 // reduction
-void Automate::reduction(int n, Symbole *s, int ruleNumber){
+void Automate::reduction(int n, Symbol* s, int ruleNumber){
     if(DEBUG){cout << "Automate.reduction()" << endl;}
 
     // initialize variables
@@ -79,7 +79,7 @@ void Automate::reduction(int n, Symbole *s, int ruleNumber){
     Expr* exprAftReduction = nullptr; // expression after reduction, contains the value
     
     // read the symbol on the top of the stack
-    Symbole* currentSymbol = symbolStack.top();
+    Symbol* currentSymbol = symbolStack.top();
     symbolStack.pop();
     
     // rules 
@@ -144,17 +144,19 @@ void Automate::reduction(int n, Symbole *s, int ruleNumber){
             symbolStack.pop();
 
             // create a new expression with the value of the expression
-            exprAftReduction = new Expr(((Expr*) currentSymbol)->getValue());        
+            exprAftReduction = new Expr(((Expr*) currentSymbol)->getValue());
+            // delete the currentSymbol after using it
+            delete currentSymbol;
             break;
         case 5:
             // E -> val
             // create a new expression with the value of the expression
-            exprAftReduction = new Expr(((Expr*) currentSymbol)->getValue());        
+            exprAftReduction = new Expr(((Expr*) currentSymbol)->getValue());
+            // delete the currentSymbol after using it
+            delete currentSymbol;
             break;
         default:
             break;
-
-        
     }
 
     // pop n states from state stack
@@ -168,12 +170,11 @@ void Automate::reduction(int n, Symbole *s, int ruleNumber){
     
     // launching transition with expression on the top
     // it is going to perform a forward for non terminal symbols
-    currentSymbol = symbolStack.top();
     currentState->transition(*this, exprAftReduction);
 }
 
 //
-void Automate::forward_unterminal(Symbole *s, State *e){
+void Automate::forward_unterminal(Symbol *s, State *e){
     if(DEBUG){cout << "Automate.forward_unterminal()" << endl;}
     // add the state and the symbol to the stack
     symbolStack.push(s);

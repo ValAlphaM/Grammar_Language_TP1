@@ -10,33 +10,33 @@ enum Identificators { OPENPAR, CLOSEPAR, PLUS, MULT, INT, FIN, ERREUR, EXPR };
 const string labels[] = { "OPENPAR", "CLOSEPAR", "PLUS", "MULT", "INT", "FIN", "ERREUR", "EXPR" };
 
 
-class Symbole {
+class Symbol {
    public:
-      Symbole(int i) : ident(i) {  }
-      virtual ~Symbole() { }
-      operator int() const { return ident; }
+      Symbol(int i) : index(i) {  }
+      virtual ~Symbol() { }
+      operator int() const { return index; }
       virtual void print();
 
    protected:
-      int ident;
+      int index;
 };
 
-class Entier : public Symbole {
+class Integer : public Symbol {
    public:
-      Entier(int v) : Symbole(INT), valeur(v) { }
-      ~Entier() { }
+      Integer(int v) : Symbol(INT), value(v) { }
+      ~Integer() { }
       virtual void print();
    protected:
-      int valeur;
+      int value;
 };
 
-class Expr : public Symbole {
+class Expr : public Symbol {
    public:
-      Expr(int v) : Symbole(EXPR), valeur(v) { }
+      Expr(int v) : Symbol(EXPR), value(v) { }
       ~Expr() { }
       virtual void print();
-      int getValue() { return valeur; }
+      int getValue() { return value; }
 
    protected:
-      int valeur;
+      int value;
 };
